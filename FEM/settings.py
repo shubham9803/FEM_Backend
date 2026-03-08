@@ -150,7 +150,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    "https://expensenest.vercel.app",
 ]
 
 CSP_SCRIPT_SRC = ("'self'", "'unsafe-eval'", "'unsafe-inline'")
