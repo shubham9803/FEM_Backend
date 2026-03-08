@@ -5,8 +5,8 @@ djangorestframework==3.16.1
 djangorestframework_simplejwt==5.5.1
 gunicorn==25.1.0
 packaging==26.0
-psycopg2==2.9.11
-psycopg2-binary==2.9.11
+psycopg==3.3.3
+psycopg-binary==3.3.3
 PyJWT==2.11.0
 python-dotenv==1.2.2
 sqlparse==0.5.5
