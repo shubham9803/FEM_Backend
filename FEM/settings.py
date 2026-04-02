@@ -34,6 +34,9 @@ DEBUG = os.getenv("DEBUG") == "True"
 ALLOWED_HOSTS = [
     "fem.fly.dev",
 ]
+# ALLOWED_HOSTS = [
+#     "*",
+# ]
 
 
 # Application definition
@@ -152,13 +155,24 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
+# CORS_ALLOWED_ORIGINS = [
+#     "https://expensenest.vercel.app","https://fem.fly.dev","http://localhost:5173"
+# ]
+
 CORS_ALLOWED_ORIGINS = [
-    "https://expensenest.vercel.app","https://web-production-1a2f8.up.railway.app","https://fem.fly.dev",
+    "https://expensenest.vercel.app","https://fem.fly.dev",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CSP_SCRIPT_SRC = ("'self'", "'unsafe-eval'", "'unsafe-inline'")
 
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://fem.fly.dev",
+#     "https://expensenest.vercel.app",
+#     "http://localhost:5173"
+# ]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://fem.fly.dev",
-    "https://expensenest.vercel.app"
+    "https://expensenest.vercel.app",
+    
 ]

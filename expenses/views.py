@@ -1,6 +1,9 @@
 from rest_framework import generics, permissions
 from .models import Expense
 from .serializers import ExpenseSerializer
+from datetime import date
+from django.utils.timezone import now
+
 
 
 class ExpenseCreateView(generics.CreateAPIView):
@@ -14,4 +17,23 @@ class FamilyExpenseListView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Expense.objects.filter(family=user.family).order_by('-expense_date')
+        queryset = Expense.objects.filter(family=user.family)
+
+        # Get query params
+        month = self.request.query_params.get('month')
+        year = self.request.query_params.get('year')
+
+        # If not provided → use current month
+        today = now().date()
+        if not month:
+            month = today.month
+        if not year:
+            year = today.year
+
+        # Filter by month & year
+        queryset = queryset.filter(
+            expense_date__month=month,
+            expense_date__year=year
+        ).order_by('-expense_date')
+
+        return queryset
