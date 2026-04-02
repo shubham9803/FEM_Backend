@@ -3,8 +3,32 @@ from .models import Expense
 from .serializers import ExpenseSerializer
 from datetime import date
 from django.utils.timezone import now
+from rest_framework.exceptions import PermissionDenied
 
 
+
+
+class ExpenseDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Expense.objects.all()
+    serializer_class = ExpenseSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Ensure users can only retrieve/edit/delete expenses 
+        # belonging to their family
+        return Expense.objects.filter(family=self.request.user.family)
+
+    def perform_update(self, serializer):
+        # Extra Security: Only the person who ADDED the expense can edit it
+        if self.get_object().added_by != self.request.user:
+            raise PermissionDenied("You can only edit expenses you created.")
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        # Extra Security: Only the person who ADDED the expense can delete it
+        if instance.added_by != self.request.user:
+            raise PermissionDenied("You can only delete expenses you created.")
+        instance.delete()
 
 class ExpenseCreateView(generics.CreateAPIView):
     serializer_class = ExpenseSerializer
